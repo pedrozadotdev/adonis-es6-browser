@@ -1,6 +1,6 @@
 {
   "name": "adonis-es6-browser",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "An Ace command that  starts a listener on file change compiling them into ES5 code using rollup with babel as well booting up a livereload server that updates the browser when changes occurred.",
   "main": "index.js",
   "scripts": {

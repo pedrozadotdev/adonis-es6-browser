@@ -47,7 +47,7 @@ To use this command you have to follow a directory pattern:
  - All ES6 code go into `src/` at project root.
  - Master Page code go into `src/master`.
  - Code of other pages go into `src/pages/[pageName]`.
- - Every page folder have to have an `index.js`.
+ - Every page folder has to have an `index.js`.
  - The output folder is `public/js/pages/[pageName].min.js`.
 
 
