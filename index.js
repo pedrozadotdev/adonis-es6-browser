@@ -8,6 +8,7 @@ const postcss = require('rollup-plugin-postcss')
 const chokidar = require('chokidar')
 const livereload = require('livereload')
 const anymatch = require('anymatch')
+const CLIEngine = require('eslint').CLIEngine
 
 const Helpers = use('Helpers')
 
@@ -61,7 +62,12 @@ class Config {
           browser: true
         }),
         commonjs(),
-        eslint(),
+        eslint({
+          formatter (report) {
+            const formatter = CLIEngine.getFormatter()
+            setTimeout(() => console.log(formatter(report)), 300)
+          }
+        }),
         babel(this.babel),
         (prod && uglify())
       ],
@@ -135,7 +141,7 @@ class ES6Browser extends Command {
                   break
                 case 'ERROR':
                 case 'FATAL':
-                  this.failed(JSON.stringify(event))
+                  this.error(JSON.stringify(event))
                   break
                 default:
                   break
