@@ -14,7 +14,6 @@ $ npm i -D adonis-es6-browser
 
 Config AdonisJS to use the command at `start/app.js`:
 ```js
-...
 /*
 |------------------------------------------------------------------
 | Commands
@@ -26,7 +25,6 @@ Config AdonisJS to use the command at `start/app.js`:
 const commands = [
   require('adonis-es6-browser')
 ]
-...
 ```
 # How to Use
 
@@ -42,7 +40,7 @@ For Production:
 $ adonis browser --prod
 ```
 
-## Code Structure
+# Code Structure
 
 To use this command you have to follow a directory pattern:
 
