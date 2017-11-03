@@ -1,4 +1,4 @@
-const { Command } = require('../sgi/node_modules/@adonisjs/ace')
+const { Command } = require('@adonisjs/ace')
 const babel = require('rollup-plugin-babel')
 const eslint = require('rollup-plugin-eslint')
 const resolve = require('rollup-plugin-node-resolve')
