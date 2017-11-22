@@ -90,7 +90,7 @@ class ES6Browser extends Command {
 
   async handle (args, flags) {
     const [srcPath, publicPath] = [Helpers.appRoot('src'), Helpers.publicPath()]
-    let [finished, ready] = [false, false]
+    let listenerCounter = 0
     chokidar.watch(`${publicPath}/js/pages/*.min.js`, { persistent: false })
       .on('add', async path => { await this.removeFile(path) })
       .on('ready', () => {
@@ -120,24 +120,25 @@ class ES6Browser extends Command {
       })
       watcher
         .on('add', path => {
+          listenerCounter++
           const rollupWatcher = require('rollup').watch(Config.rollup(path, Config.output(path, publicPath), !!flags.prod))
           rollupWatcher.on('event', event => {
             if (flags.prod) {
               if (event.code === 'END') {
                 rollupWatcher.close()
-                if (finished) {
+                listenerCounter--
+                if (!listenerCounter) {
                   this.success(`${this.icon('success')} All files were bundle for production`)
                 }
               }
             } else {
               switch (event.code) {
                 case 'END':
-                  if (ready) console.clear()
+                  if (listenerCounter) {
+                    listenerCounter--
+                  } else { console.clear() }
                   this.info(`${this.icon('info')} ${Config.output(path, publicPath).split('/').slice(-1)[0]} bundled...`)
-                  if (finished) {
-                    this.success(`${this.icon('success')} Waiting for changes...`)
-                    ready = true
-                  }
+                  if(!listenerCounter) { this.success(`${this.icon('success')} Waiting for changes...`) }
                   break
                 case 'ERROR':
                 case 'FATAL':
@@ -149,7 +150,6 @@ class ES6Browser extends Command {
             }
           })
         })
-        .on('ready', () => { finished = true })
     }
   }
 }
